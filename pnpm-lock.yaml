@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@iconify-json/simple-icons':
+        specifier: ^1.2.24
+        version: 1.2.24
+      '@iconify-json/solar':
+        specifier: ^1.2.2
+        version: 1.2.2
       astro:
         specifier: ^5.2.6
         version: 5.2.6(@types/node@22.13.1)(rollup@4.34.6)(typescript@5.7.3)(yaml@2.7.0)
