@@ -24,7 +24,7 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: ${{ env.VERSION }}
+          version: latest
           package_json_file: "${{ inputs.path }}/package.json"
 
       - name: Install
