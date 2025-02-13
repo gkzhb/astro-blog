@@ -6,6 +6,10 @@ export default defineConfig({
   prefetch: true,
   site: "https://blog.gkzhb.top/",
   output: "static",
+  redirects: {
+    // redirect old hugo url to new url
+    "/post/[...slug]": "/posts/[...slug]",
+  },
   integrations: [
     charm({
       config: {
@@ -33,4 +37,3 @@ export default defineConfig({
     }),
   ],
 });
-
