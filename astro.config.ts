@@ -19,6 +19,7 @@ export default defineConfig({
         title: "Title on home page",
         description: "Description on home page",
         author: "gkzhb",
+        rss: true,
         licenseId: "CC-BY-4.0",
         side: {
           title: "gkzhb's blog",
@@ -33,6 +34,21 @@ export default defineConfig({
               link: "https://github.com/gkzhb",
               icon: "simple-icons:github",
             },
+            {
+              title: "Obsidian 知识花园",
+              link: "https://blog.gkzhb.top/roam/",
+              icon: "simple-icons:obsidian",
+            },
+            {
+              title: "本网站由 “又拍云” 提供 CDN 加速/云存储服务",
+              link: "https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral",
+              icon: "simple-icons:rocket",
+            },
+            {
+              title: "RSS",
+              link: "/rss.xml",
+              icon: "simple-icons:rss",
+            },
           ],
         },
       },
@@ -41,4 +57,3 @@ export default defineConfig({
     react(),
   ],
 });
-
