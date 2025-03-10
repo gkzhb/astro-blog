@@ -36,7 +36,7 @@ export default defineConfig({
             },
             {
               title: "Obsidian 知识花园",
-              link: "https://blog.gkzhb.top/roam/",
+              link: "https://roam.gkzhb.top/",
               icon: "simple-icons:obsidian",
             },
             {
