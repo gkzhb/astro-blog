@@ -40,11 +40,6 @@ export default defineConfig({
               icon: "simple-icons:obsidian",
             },
             {
-              title: "本网站由 “又拍云” 提供 CDN 加速/云存储服务",
-              link: "https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral",
-              icon: "simple-icons:rocket",
-            },
-            {
               title: "RSS",
               link: "/rss.xml",
               icon: "simple-icons:rss",
