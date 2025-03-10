@@ -16,8 +16,8 @@ export default defineConfig({
     charm({
       config: {
         lang: "en",
-        title: "Title on home page",
-        description: "Description on home page",
+        title: "gkzhb's blog",
+        description: "My personal blogs",
         author: "gkzhb",
         rss: true,
         licenseId: "CC-BY-4.0",
