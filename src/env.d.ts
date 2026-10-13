@@ -1,1 +1,1 @@
-/// <reference types="../.astro/.d.ts" />
+/// <reference types="astro/client" />

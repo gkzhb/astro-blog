@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getPublicPosts } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const allPosts = await getPublicPosts();
+  const uniqueTags = [...new Set(allPosts.map((post) => post.data.category).filter((category): category is string => !!category))];
+  return uniqueTags.map((category) => ({
+    params: { category },
+    props: { posts: allPosts.filter((post) => post.data.category === category), category },
+  }));
+}
+
+const { posts, category: tag } = Astro.props;
+const totalCount = posts.length;
+---
+
+<BaseLayout
+  title={`分类：${tag}`}
+  description={`Browse articles in category ${tag}`}
+>
+  <header class="tag-header">
+    <div class="tag-breadcrumb">
+      <a href="/categories/">分类</a>
+      <span class="sep">/</span>
+      <span class="current">#{tag}</span>
+    </div>
+    <h1 class="tag-title">分类： <span class="highlight">#{tag}</span></h1>
+    <p class="tag-count">共 {totalCount} 篇文章</p>
+  </header>
+
+  {posts.length > 0 && (
+    <section class="tag-section">
+      <h2 class="section-title">Articles ({posts.length})</h2>
+      <div class="posts-list">
+        {posts.map((post) => (
+          <ArticleCard post={post} />
+        ))}
+      </div>
+    </section>
+  )}
+
+</BaseLayout>
+
+<style>
+  .tag-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tag-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .tag-breadcrumb a {
+    color: var(--accent);
+  }
+
+  .tag-title {
+    font-size: 2.25rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  .highlight {
+    color: var(--accent);
+  }
+
+  .tag-count {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tag-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.4rem;
+  }
+
+</style>

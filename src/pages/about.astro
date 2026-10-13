@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getEntry, render } from 'astro:content';
+
+const about = await getEntry('specials', 'about');
+if (!about || about.data.hidden || about.data.disabled) {
+  throw new Error('The original public about entry is required.');
+}
+const { Content } = await render(about);
+---
+
+<BaseLayout title={about.data.title} description={about.data.description || undefined}>
+  <article class="about-page">
+    <header class="about-header">
+      <h1 class="page-title">{about.data.title}</h1>
+    </header>
+    <div class="about-content prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-page {
+    padding-top: 1rem;
+  }
+
+  .about-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-title {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 2.25rem;
+  }
+
+  .page-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .about-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .manifesto-quote {
+    margin: 1.75rem 0;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--accent);
+    background: var(--bg-surface);
+    border-radius: 0 8px 8px 0;
+    font-style: normal;
+  }
+
+  .manifesto-author {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+  }
+</style>

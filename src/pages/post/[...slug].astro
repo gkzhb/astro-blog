@@ -1,0 +1,13 @@
+---
+import StaticRedirect from '../../components/StaticRedirect.astro';
+import { getPublishedPosts, postPath } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  return (await getPublishedPosts()).map((post) => ({
+    params: { slug: post.id },
+    props: { target: postPath(post.id) },
+  }));
+}
+const { target } = Astro.props;
+---
+<StaticRedirect target={target} />

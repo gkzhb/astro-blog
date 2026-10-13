@@ -1,0 +1,98 @@
+---
+import { siteConfig } from '../config/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SearchModal from '../components/SearchModal.astro';
+import BackToTop from '../components/BackToTop.astro';
+import ImageZoom from '../components/ImageZoom.astro';
+import '../styles/global.css';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  wide?: boolean;
+  noindex?: boolean;
+  canonicalPath?: string;
+}
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description,
+  image = '/og-image.svg',
+  wide = false,
+  noindex = false,
+  canonicalPath = Astro.url.pathname,
+} = Astro.props;
+
+const canonicalURL = new URL(canonicalPath, Astro.site || siteConfig.siteUrl);
+const pageTitle = title === siteConfig.title ? `${siteConfig.title} — ${siteConfig.tagline}` : `${title} | ${siteConfig.title}`;
+
+const features = siteConfig.features ?? {};
+const showSearch = features.search !== false;
+const showBackToTop = features.backToTop !== false;
+const showImageZoom = features.imageZoom !== false;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme={siteConfig.defaultTheme}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href={new URL('/rss.xml', Astro.site || siteConfig.siteUrl)} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description || siteConfig.description} />
+    <meta name="author" content={siteConfig.author} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, canonicalURL)} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, canonicalURL)} />
+
+    <!-- Anti-FOUC script: Executed synchronously before DOM render -->
+    <script is:inline define:vars={{ defaultTheme: siteConfig.defaultTheme }}>
+      (function () {
+        let mode = defaultTheme;
+        try { mode = localStorage.getItem('minrock_theme') || defaultTheme; } catch {}
+        const effective = mode === 'auto'
+          ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'slate' : 'cream')
+          : mode;
+        document.documentElement.setAttribute('data-theme',
+          ['white', 'cream', 'slate', 'midnight'].includes(effective) ? effective : defaultTheme);
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-to-content">跳转到正文</a>
+    <Header />
+    <main id="main-content" class:list={['main-content', wide ? 'container-wide' : 'container']}>
+      <slot />
+    </main>
+    <Footer />
+    {showSearch && <SearchModal />}
+    {showBackToTop && <BackToTop />}
+    {showImageZoom && <ImageZoom />}
+  </body>
+</html>
+
+<style>
+  .main-content {
+    flex: 1;
+    padding-bottom: 3.5rem;
+  }
+</style>

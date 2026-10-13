@@ -1,0 +1,11 @@
+packages:
+  - '.'
+
+registry: https://registry.npmjs.org/
+
+# Keep the React integration and OXC transform peer versions compatible.
+overrides:
+  '@astrojs/react>@vitejs/plugin-react': 6.1.1
+  # 8.5.30 is too new for pnpm 12's minimum release-age policy.
+  # Use the previous compatible release instead of disabling that protection.
+  postcss: 8.5.29

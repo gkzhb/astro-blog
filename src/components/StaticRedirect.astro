@@ -1,0 +1,24 @@
+---
+import { siteConfig } from '../config/site';
+
+interface Props { target: string; }
+const { target } = Astro.props;
+const canonical = new URL(target, siteConfig.siteUrl);
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonical} />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <title>页面已迁移 | {siteConfig.title}</title>
+  </head>
+  <body>
+    <p>页面已迁移，<a href={target}>点击访问新地址</a>。</p>
+    <script is:inline define:vars={{ target }}>
+      location.replace(target + location.search + location.hash);
+    </script>
+  </body>
+</html>

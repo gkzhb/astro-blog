@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublicPosts } from '../utils/posts';
+import ArticleCard from '../components/ArticleCard.astro';
+const posts = await getPublicPosts();
+---
+<BaseLayout title="搜索文章">
+  <h1>搜索文章</h1>
+  <p>使用页面顶部搜索按钮或 Ctrl / ⌘ + K，可搜索文章正文与标签。</p>
+  <label for="search-page-input">筛选标题与正文</label>
+  <input id="search-page-input" type="search" placeholder="输入关键词…" autocomplete="off" />
+  <p id="search-page-status" role="status"></p>
+  <div id="search-page-results">
+    {posts.map((post) => <div data-search-text={`${post.data.title} ${post.body ?? ''} ${post.data.tags.join(' ')}`.toLocaleLowerCase()}><ArticleCard post={post} /></div>)}
+  </div>
+</BaseLayout>
+<script>
+  const input = document.querySelector<HTMLInputElement>('#search-page-input');
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-search-text]'));
+  const status = document.querySelector('#search-page-status');
+  input?.addEventListener('input', () => {
+    const tokens = input.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    let count = 0;
+    for (const item of items) {
+      item.hidden = !tokens.every((token) => item.dataset.searchText?.includes(token));
+      if (!item.hidden) count++;
+    }
+    if (status) status.textContent = `找到 ${count} 篇文章`;
+  });
+</script>
+<style>
+  input { display: block; width: 100%; margin-top: .5rem; padding: .75rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--bg-surface); color: var(--text); font: inherit; }
+</style>

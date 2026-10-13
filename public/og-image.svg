@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">gkzhb's blog</title>
+  <desc id="desc">gkzhb 的个人博客：记录技术、工具与思考。</desc>
+  <rect width="1200" height="630" fill="#f7f4ea"/>
+  <rect x="64" y="64" width="1072" height="502" rx="18" fill="#fffdf8" stroke="#e5dac1" stroke-width="2"/>
+  <path d="M96 112h72" stroke="#92400e" stroke-width="8" stroke-linecap="round"/>
+  <text x="96" y="290" font-family="system-ui, sans-serif" font-size="84" font-weight="700" fill="#292524">gkzhb's blog</text>
+  <text x="100" y="370" font-family="system-ui, 'Noto Sans CJK SC', sans-serif" font-size="38" fill="#57534e">记录技术、工具与思考。</text>
+  <text x="100" y="498" font-family="ui-monospace, monospace" font-size="28" fill="#92400e">blog.gkzhb.top</text>
+</svg>
