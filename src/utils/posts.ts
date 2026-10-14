@@ -1,4 +1,13 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { postSummary } from './summary';
+
+/** Resolve once at the data boundary so cards, filters, SEO and feeds agree. */
+async function withSummary(post: CollectionEntry<'blog'>): Promise<CollectionEntry<'blog'>> {
+  return {
+    ...post,
+    data: { ...post.data, description: await postSummary(post.data.description, post.body) },
+  };
+}
 
 /** Discovery boundary used by listings and machine-readable feeds. */
 export function isPublicPost({ data }: CollectionEntry<'blog'>): boolean {
@@ -7,12 +16,14 @@ export function isPublicPost({ data }: CollectionEntry<'blog'>): boolean {
 
 /** Unlisted (hidden) posts retain their direct links; drafts never get pages. */
 export async function getPublishedPosts(): Promise<CollectionEntry<'blog'>[]> {
-  return (await getCollection('blog', ({ data }) => !data.draft))
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return (await Promise.all(posts.map(withSummary)))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf() || a.id.localeCompare(b.id));
 }
 
 export async function getPublicPosts(): Promise<CollectionEntry<'blog'>[]> {
-  return (await getCollection('blog', isPublicPost))
+  const posts = await getCollection('blog', isPublicPost);
+  return (await Promise.all(posts.map(withSummary)))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf() || a.id.localeCompare(b.id));
 }
 
