@@ -73,17 +73,21 @@ const currentYear = new Date().getFullYear();
     <a href="https://roam.gkzhb.top/" target="_blank" rel="noopener noreferrer">Obsidian 知识花园</a>
 
     <div class="footer-copy">
-      <span>© {currentYear} {siteConfig.title}.</span>
-      <span class="footer-separator">•</span>
-      <span class="footer-ssg">Pure SSG powered by <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a></span>
+      <span>© {currentYear} {siteConfig.title}</span>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" aria-label="内容许可：CC BY 4.0">CC BY 4.0</a>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <a href="https://github.com/rnt-rez/minrock" target="_blank" rel="noopener noreferrer">Minrock Theme</a>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <span>Powered by <a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a></span>
     </div>
 
-    <div class="footer-license">
-      内容许可：<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC-BY-4.0</a>
-    </div>
-
-    <div class="footer-signature">
-      <em>Crafted with precision by the <a href="https://github.com/rnt-rez/minrock" target="_blank" rel="noopener noreferrer">Minrock Project</a>. Engineered for the open web.</em>
+    <div class="footer-registrations" aria-label="网站备案信息">
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">京ICP备2024091958号-1</a>
+      <a href="https://beian.mps.gov.cn/#/query/webSearch?code=11010802045082" target="_blank" rel="noopener noreferrer">
+        <img src="/assets/ghs.png" width="20" height="20" alt="" />
+        <span>京公网安备 11010802045082 号</span>
+      </a>
     </div>
   </div>
 </footer>
@@ -139,27 +143,37 @@ const currentYear = new Date().getFullYear();
     justify-content: center;
   }
 
-  .footer-copy a {
-    color: var(--text);
-    font-weight: 600;
+  .footer-copy a,
+  .footer-registrations a {
+    color: inherit;
   }
 
   .footer-separator {
     opacity: 0.4;
   }
 
-  .footer-signature {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+  .footer-registrations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    font-size: 0.8rem;
   }
 
-  .footer-signature a {
-    color: var(--text);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  .footer-registrations a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
   }
 
-  .footer-signature a:hover {
+  .footer-registrations img {
+    flex-shrink: 0;
+  }
+
+  .footer-copy a:hover,
+  .footer-registrations a:hover {
     color: var(--accent);
   }
 </style>
