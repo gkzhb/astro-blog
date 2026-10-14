@@ -17,7 +17,7 @@ const showThemeSwitcher = features.themeSwitcher !== false;
   <div class="container-wide header-inner">
     <!-- Brand -->
     <a href="/" class="brand" aria-label={`${siteConfig.title} 首页`}>
-      <span class="brand-rock">🪨</span>
+      <img class="brand-icon" src="/favicon.png" width="28" height="28" alt="" />
       <span class="brand-title">{siteConfig.title}</span>
     </a>
 
@@ -100,8 +100,12 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     color: var(--text);
   }
 
-  .brand-rock {
-    font-size: 1.35rem;
+  .brand-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
   }
 
   .nav {
